@@ -61,7 +61,7 @@ def calculate_clip_aesthetic(img_path):
     model = MLP(768)  # CLIP embedding dim is 768 for CLIP ViT L 14
 
     s = torch.load(
-        "D:\\workspace\\PythonProject\\criteria\\checkpoint\\clip_aesthetic\\ava+logos-l14-linearMSE.pth")  # load the model you trained previously or the model available in this repo
+        "..\\checkpoint\\clip_aesthetic\\ava+logos-l14-linearMSE.pth")  # load the model you trained previously or the model available in this repo
 
     model.load_state_dict(s)
 
@@ -97,5 +97,5 @@ def calculate_clip_aesthetic(img_path):
     return prediction
 
 if __name__ == '__main__':
-    image_path = "D:\\workspace\\PythonProject\\criteria\\test_img\\test.png"
+    image_path = "D..\\criteria\\test_img\\test.png"
     calculate_clip_aesthetic(image_path)

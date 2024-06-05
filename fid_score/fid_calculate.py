@@ -59,7 +59,7 @@ parser.add_argument('--num-workers', type=int, default=0,
                           'Defaults to `min(8, num_cpus)`'))
 parser.add_argument('--device', type=str, default=None,
                     help='Device to use. Like cuda, cuda:0 or cpu')
-parser.add_argument('--dims', type=int, default=64,
+parser.add_argument('--dims', type=int, default=2048,
                     choices=list(InceptionV3.BLOCK_INDEX_BY_DIM),
                     help=('Dimensionality of Inception features to use. '
                           'By default, uses pool3 features'))
