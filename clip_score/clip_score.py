@@ -219,25 +219,7 @@ def main():
     clip_score = clip_score.cpu().item()
     print('CLIP Score: ', clip_score)
 
-def calculate_clipscore(real_path, fake_path):
-    parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--batch-size', type=int, default=50,
-                        help='Batch size to use')
-    parser.add_argument('--clip-model', type=str, default='ViT-B/32',
-                        help='CLIP model to use')
-    parser.add_argument('--num-workers', type=int,
-                        help=('Number of processes to use for data loading. '
-                              'Defaults to `min(8, num_cpus)`'))
-    parser.add_argument('--device', type=str, default=None,
-                        help='Device to use. Like cuda, cuda:0 or cpu')
-    parser.add_argument('--real_flag', type=str, default='img',
-                        help=('The modality of real path. '
-                              'Default to img'))
-    parser.add_argument('--fake_flag', type=str, default='img',
-                        help=('The modality of real path. '
-                              'Default to txt'))
-    args = parser.parse_args()
-
+def calculate_clipscore(real_path, fake_path, args):
     if args.device is None:
         device = torch.device('cuda' if (torch.cuda.is_available()) else 'cpu')
     else:

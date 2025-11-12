@@ -51,21 +51,24 @@ except ImportError:
 
 from fid_score.inception import InceptionV3
 
-parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
-parser.add_argument('--batch-size', type=int, default=50,
-                    help='Batch size to use')
-parser.add_argument('--num-workers', type=int, default=0,
-                    help=('Number of processes to use for data loading. '
-                          'Defaults to `min(8, num_cpus)`'))
-parser.add_argument('--device', type=str, default=None,
-                    help='Device to use. Like cuda, cuda:0 or cpu')
-parser.add_argument('--dims', type=int, default=2048,
-                    choices=list(InceptionV3.BLOCK_INDEX_BY_DIM),
-                    help=('Dimensionality of Inception features to use. '
-                          'By default, uses pool3 features'))
-parser.add_argument('--save-stats', action='store_true',
-                    help=('Generate an npz archive from a directory of samples. '
-                          'The first path is used as input and the second as output.'))
+def get_argpaser():
+    parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--batch-size', type=int, default=50,
+                        help='Batch size to use')
+    parser.add_argument('--num-workers', type=int, default=0,
+                        help=('Number of processes to use for data loading. '
+                              'Defaults to `min(8, num_cpus)`'))
+    parser.add_argument('--device', type=str, default=None,
+                        help='Device to use. Like cuda, cuda:0 or cpu')
+    parser.add_argument('--dims', type=int, default=2048,
+                        choices=list(InceptionV3.BLOCK_INDEX_BY_DIM),
+                        help=('Dimensionality of Inception features to use. '
+                              'By default, uses pool3 features'))
+    parser.add_argument('--save-stats', action='store_true',
+                        help=('Generate an npz archive from a directory of samples. '
+                              'The first path is used as input and the second as output.'))
+    args = parser.parse_args()
+    return args
 
 IMAGE_EXTENSIONS = {'bmp', 'jpg', 'jpeg', 'pgm', 'png', 'ppm',
                     'tif', 'tiff', 'webp'}
@@ -282,7 +285,7 @@ def save_fid_stats(real_paths, fake_path, batch_size, device, dims, num_workers=
     np.savez_compressed(fake_path, mu=m1, sigma=s1)
 
 
-def main(real_path, fake_path):
+def main(real_path, fake_path, args):
     args = parser.parse_args()
 
     if args.device is None:
@@ -315,8 +318,7 @@ def main(real_path, fake_path):
                                           num_workers)
     print('FID: ', fid_value)
 
-def fid_score(real_path, fake_path):
-    args = parser.parse_args()
+def fid_score(real_path, fake_path, args):
 
     if args.device is None:
         device = torch.device('cuda' if (torch.cuda.is_available()) else 'cpu')
@@ -351,6 +353,7 @@ def fid_score(real_path, fake_path):
 
 
 if __name__ == '__main__':
+    args = get_argpaser()
     real_path = "D:\workspace\dataset\Illustration_SR\\trainB_SR_512"
     fake_path = "D:\\workspace\\generated_results\\already\\control_test"
-    main(real_path=real_path, fake_path=fake_path)
+    main(real_path=real_path, fake_path=fake_path, args=args)

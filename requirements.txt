@@ -2,3 +2,8 @@ opencv-python
 matplotlib
 tqdm
 jupyter
+git+https://github.com/openai/CLIP.git
+pytorch-lightning
+scipy
+lpips
+torch-fidelity
