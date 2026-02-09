@@ -11,6 +11,8 @@ from ssim_score.calculate_ssim import get_ssim_score
 from kid_score import get_kid_score
 
 from cal_utils import save_results_to_log
+
+
 def get_args():
     parser = argparse.ArgumentParser(description='Calculate image quality metrics')
     parser.add_argument('--real_dir', type=str, required=True,
